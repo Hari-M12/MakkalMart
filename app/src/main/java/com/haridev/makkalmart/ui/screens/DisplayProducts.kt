@@ -39,6 +39,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import com.haridev.makkalmart.viewmodel.MakkalMartViewModel
 
@@ -79,9 +80,12 @@ fun DisplayProducts(navController: NavHostController, viewModel: MakkalMartViewM
     ) { innerPadding ->
 
         if (products.value.isEmpty()) {
-            Column (modifier = Modifier.padding(innerPadding).fillMaxWidth(),
-                verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-                CircularProgressIndicator()
+            Column(modifier = Modifier.fillMaxSize().padding(innerPadding), verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = "No Products Found", style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold)
+                Text(text = "Click the + button below to add your first product", modifier = Modifier.padding(top = 8.dp),textAlign = TextAlign.Center)
             }
         } else {
 
@@ -99,8 +103,7 @@ fun DisplayProducts(navController: NavHostController, viewModel: MakkalMartViewM
 
                     items(filteredProducts) { product ->
 
-                        Card(modifier = Modifier.fillMaxWidth()
-                            .height(320.dp).clickable{
+                        Card(modifier = Modifier.fillMaxWidth().height(320.dp).clickable{
                                 navController.navigate("product_details/${product.id}")
                             }, elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
                         ) {
